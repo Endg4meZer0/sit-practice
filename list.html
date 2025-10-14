@@ -1,0 +1,330 @@
+<html>
+    <head>
+        <title>Рейтинг операционных систем</title>
+    </head>
+    <body>
+        <header>
+            <p>
+                <a href="main.html">Операционные системы</a>
+                <br />
+                <a href="#"><b>Рейтинг операционных систем</b></a>
+            </p>
+            <hr />
+        </header>
+        <details open="true">
+            <summary>График</summary>
+            <form action="graphic" method="get">
+                <fieldset>
+                    <legend>Значение оси OX</legend>
+                    <input type="radio" name="x" value="all" checked /> Все ОС
+                    <br />
+                    <input type="radio" name="x" value="win" /> Версии Windows
+                    <br />
+                    <input type="radio" name="x" value="mac" /> Версии MacOS
+                    <br />
+                    <input type="radio" name="x" value="linux" /> Версии Linux
+                </fieldset>
+                <fieldset>
+                    <legend>Значение оси OY</legend>
+                    <input type="checkbox" name="y" value="kolvo" /> Кол-во
+                    установок
+                    <br />
+                    <input type="checkbox" name="y" value="dolya" /> Доля рынка
+                </fieldset>
+                <input type="submit" value="Сформировать" />
+            </form>
+        </details>
+        <details open="true">
+            <summary>Фильтр</summary>
+            <form action="filter" method="get">
+                <fieldset>
+                    <legend>ОС</legend>
+                    <input type="checkbox" name="os" value="win" checked />
+                    Версии Windows
+                    <br />
+                    <input type="checkbox" name="os" value="mac" checked />
+                    Версии MacOS
+                    <br />
+                    <input type="checkbox" name="os" value="linux" checked />
+                    Версии Linux
+                </fieldset>
+                <label
+                    >Кол-во установок: от
+                    <input type="input" name="kolvo-ot" />
+                    до
+                    <input type="input" name="kolvo-do" />
+                </label>
+                <br />
+                <label
+                    >Доля рынка: от
+                    <input type="input" name="dolya-ot" />
+                    до
+                    <input type="input" name="dolya-do" />
+                </label>
+                <br />
+                <label
+                    >Доля рынка версии ОС: от
+                    <input type="input" name="dolya-os-ot" />
+                    до
+                    <input type="input" name="dolya-os-do" />
+                </label>
+                <br />
+                <input type="submit" value="Найти" />
+            </form>
+        </details>
+        <details open="true">
+            <summary>Сортировка</summary>
+            <form action="sort" method="get">
+                Первый уровень:
+                <select name="perv">
+                    <option value="0">Название</option>
+                    <option value="1">ОС</option>
+                    <option value="2">Кол-во установок</option>
+                    <option value="3" selected>Доля рынка</option>
+                    <option value="4">Доля рынка версии ОС</option>
+                </select>
+                по убыванию
+                <input type="checkbox" name="perv-ubyv" value="perv-ubyv" />
+                <br />
+                Второй уровень:
+                <select name="vtor">
+                    <option value="0">Название</option>
+                    <option value="1">ОС</option>
+                    <option value="2">Кол-во установок</option>
+                    <option value="3">Доля рынка</option>
+                    <option value="4" selected>Доля рынка версии ОС</option>
+                </select>
+                по убыванию
+                <input type="checkbox" name="vtor-ubyv" value="vtor-ubyv" />
+                <br />
+                Третий уровень:
+                <select name="tret">
+                    <option value="0">Название</option>
+                    <option value="1" selected>ОС</option>
+                    <option value="2">Кол-во установок</option>
+                    <option value="3">Доля рынка</option>
+                    <option value="4">Доля рынка версии ОС</option>
+                </select>
+                по убыванию
+                <input type="checkbox" name="tret-ubyv" value="tret-ubyv" />
+                <br />
+                <input type="submit" value="Отсортировать" />
+            </form>
+        </details>
+        <table>
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>ОС</th>
+                    <th>Кол-во установок</th>
+                    <th>Доля использования</th>
+                    <th>Доля использования среди ОС</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Windows 11</td>
+                    <td>Windows</td>
+                    <td>850 млн</td>
+                    <td>32.1%</td>
+                    <td>45.2%</td>
+                </tr>
+                <tr>
+                    <td>Windows 10</td>
+                    <td>Windows</td>
+                    <td>750 млн</td>
+                    <td>28.3%</td>
+                    <td>39.9%</td>
+                </tr>
+                <tr>
+                    <td>Windows 7</td>
+                    <td>Windows</td>
+                    <td>120 млн</td>
+                    <td>4.5%</td>
+                    <td>6.4%</td>
+                </tr>
+                <tr>
+                    <td>Windows 8.1</td>
+                    <td>Windows</td>
+                    <td>60 млн</td>
+                    <td>2.3%</td>
+                    <td>3.2%</td>
+                </tr>
+                <tr>
+                    <td>Windows XP</td>
+                    <td>Windows</td>
+                    <td>15 млн</td>
+                    <td>0.6%</td>
+                    <td>0.8%</td>
+                </tr>
+                <tr>
+                    <td>Windows Server</td>
+                    <td>Windows</td>
+                    <td>85 млн</td>
+                    <td>3.2%</td>
+                    <td>4.5%</td>
+                </tr>
+
+                <tr>
+                    <td>macOS Sonoma</td>
+                    <td>macOS</td>
+                    <td>95 млн</td>
+                    <td>3.6%</td>
+                    <td>28.8%</td>
+                </tr>
+                <tr>
+                    <td>macOS Ventura</td>
+                    <td>macOS</td>
+                    <td>85 млн</td>
+                    <td>3.2%</td>
+                    <td>25.8%</td>
+                </tr>
+                <tr>
+                    <td>macOS Monterey</td>
+                    <td>macOS</td>
+                    <td>65 млн</td>
+                    <td>2.5%</td>
+                    <td>19.7%</td>
+                </tr>
+                <tr>
+                    <td>macOS Big Sur</td>
+                    <td>macOS</td>
+                    <td>45 млн</td>
+                    <td>1.7%</td>
+                    <td>13.6%</td>
+                </tr>
+                <tr>
+                    <td>macOS Catalina</td>
+                    <td>macOS</td>
+                    <td>25 млн</td>
+                    <td>0.9%</td>
+                    <td>7.6%</td>
+                </tr>
+                <tr>
+                    <td>macOS Mojave</td>
+                    <td>macOS</td>
+                    <td>15 млн</td>
+                    <td>0.6%</td>
+                    <td>4.5%</td>
+                </tr>
+
+                <tr>
+                    <td>Ubuntu</td>
+                    <td>Linux</td>
+                    <td>45 млн</td>
+                    <td>1.7%</td>
+                    <td>25.0%</td>
+                </tr>
+                <tr>
+                    <td>Linux Mint</td>
+                    <td>Linux</td>
+                    <td>28 млн</td>
+                    <td>1.1%</td>
+                    <td>15.6%</td>
+                </tr>
+                <tr>
+                    <td>Debian</td>
+                    <td>Linux</td>
+                    <td>25 млн</td>
+                    <td>0.9%</td>
+                    <td>13.9%</td>
+                </tr>
+                <tr>
+                    <td>Fedora</td>
+                    <td>Linux</td>
+                    <td>18 млн</td>
+                    <td>0.7%</td>
+                    <td>10.0%</td>
+                </tr>
+                <tr>
+                    <td>Arch Linux</td>
+                    <td>Linux</td>
+                    <td>12 млн</td>
+                    <td>0.5%</td>
+                    <td>6.7%</td>
+                </tr>
+                <tr>
+                    <td>openSUSE</td>
+                    <td>Linux</td>
+                    <td>8 млн</td>
+                    <td>0.3%</td>
+                    <td>4.4%</td>
+                </tr>
+                <tr>
+                    <td>Manjaro</td>
+                    <td>Linux</td>
+                    <td>7 млн</td>
+                    <td>0.3%</td>
+                    <td>3.9%</td>
+                </tr>
+                <tr>
+                    <td>CentOS</td>
+                    <td>Linux</td>
+                    <td>6 млн</td>
+                    <td>0.2%</td>
+                    <td>3.3%</td>
+                </tr>
+                <tr>
+                    <td>Pop!_OS</td>
+                    <td>Linux</td>
+                    <td>5 млн</td>
+                    <td>0.2%</td>
+                    <td>2.8%</td>
+                </tr>
+                <tr>
+                    <td>Elementary OS</td>
+                    <td>Linux</td>
+                    <td>4 млн</td>
+                    <td>0.2%</td>
+                    <td>2.2%</td>
+                </tr>
+                <tr>
+                    <td>Zorin OS</td>
+                    <td>Linux</td>
+                    <td>3 млн</td>
+                    <td>0.1%</td>
+                    <td>1.7%</td>
+                </tr>
+                <tr>
+                    <td>Kali Linux</td>
+                    <td>Linux</td>
+                    <td>3 млн</td>
+                    <td>0.1%</td>
+                    <td>1.7%</td>
+                </tr>
+                <tr>
+                    <td>MX Linux</td>
+                    <td>Linux</td>
+                    <td>3 млн</td>
+                    <td>0.1%</td>
+                    <td>1.7%</td>
+                </tr>
+                <tr>
+                    <td>Gentoo</td>
+                    <td>Linux</td>
+                    <td>2 млн</td>
+                    <td>0.1%</td>
+                    <td>1.1%</td>
+                </tr>
+                <tr>
+                    <td>Slackware</td>
+                    <td>Linux</td>
+                    <td>1 млн</td>
+                    <td>0.04%</td>
+                    <td>0.6%</td>
+                </tr>
+                <tr>
+                    <td>Other Linux</td>
+                    <td>Linux</td>
+                    <td>10 млн</td>
+                    <td>0.4%</td>
+                    <td>5.6%</td>
+                </tr>
+            </tbody>
+        </table>
+        <footer>
+            <hr />
+            <p align="center">Тарасенко Т.В., Б9123-02.03.03тп/1</p>
+        </footer>
+    </body>
+</html>
