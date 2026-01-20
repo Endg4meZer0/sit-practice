@@ -1,0 +1,18 @@
+doctype html
+html
+  head
+    title Операционные системы
+    link(rel="stylesheet" href="../dist/styles.css")
+    block head
+  body
+    header.header
+      nav.header__tabs
+        block header-tabs
+      div.header__searchbox
+        input(type="text" placeholder="Найти")
+        a.header__searchbox-more(href="#") Поиск
+    main
+      block content
+    footer.footer
+      hr
+      p.footer__text Тарасенко Т.В., Б9123-02.03.03тп/1

@@ -1,0 +1,46 @@
+extends layout
+
+block header-tabs
+  a.header__tabs-tab(href="main.html") Операционные системы
+  a.header__tabs-tab.header__tabs-tab--active(href="#") Рейтинг операционных систем
+
+block content
+  section.list
+    details.list__details(open="true")
+      summary.list__summary График
+      form(action="graphic" method="get")
+        fieldset
+          legend Значение оси OX
+          input(type="radio" name="x" value="all" checked) 
+          | Все ОС
+          br
+          input(type="radio" name="x" value="win") 
+          | Версии Windows
+          br
+          input(type="radio" name="x" value="mac")
+          | Версии MacOS
+          br
+          input(type="radio" name="x" value="linux")
+          | Версии Linux
+        fieldset
+          legend Значение оси OY
+          input(type="checkbox" name="y" value="kolvo")
+          | Кол-во установок
+          br
+          input(type="checkbox" name="y" value="dolya")
+          | Доля рынка
+        input(type="submit" value="Сформировать")
+    table.list__table
+      thead
+        tr
+          th Название
+          th ОС
+          th Кол-во установок
+          th Доля рынка
+      tbody
+        each row in [{name: 'Windows 10', os: 'Windows', installs: 100, marketShare: '50%'},{name: 'macOS Ventura', os: 'MacOS', installs: 50, marketShare: '25%'},{name: 'Ubuntu 22.04', os: 'Linux', installs: 30, marketShare: '15%'}]
+          tr
+            td= row.name
+            td= row.os
+            td= row.installs
+            td= row.marketShare
