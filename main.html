@@ -2,96 +2,112 @@
     <head>
         <title>Операционные системы</title>
         <link rel="stylesheet" href="styles/main.css">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
-    <body>
-        <div class="header">
-            <div class="header-tabs">
-                <div class="header-tabs-flex">
-                    <a href="#"><p class="active">
-                        Операционные системы
-                    </p></a><!--
-                --><a href="list.html"><p>
-                        Рейтинг операционных систем
-                    </p></a>
+    <body class="bg-white">
+        <div class="conteiner-fluid mx-4 border border-light-subtle rounded-4">
+            <div class="navbar navbar-expand-md">
+                <div class="mx-auto mb-2 mb-lg-0">
+                    <ul class="navbar-nav">
+                        <li class="nav-item bg-primary rounded-2">
+                            <a class="nav-link active text-light px-2" aria-current="page" href="#">Операционные системы</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-primary" href="list.html">Рейтинг операционных систем</a>
+                        </li>
+                    </ul>
                 </div>
-            </div>
-            <div class="header-searchbox">
-                <input type="text" placeholder="Найти">
-                <p class="header-searchbox-more"><a href="#">Поиск</a></p>
+                <form class="d-flex me-2 my-auto mx-auto" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Найти" aria-label="Поиск">
+                    <button class="btn btn-outline-success">Поиск</button>
+                </form>
             </div>
         </div>
-        <div class="main-images">
-            <a href="more.html"
-                ><img
-                    src="https://thefrisky.com/wp-content/uploads/2019/01/windows-logo-1.png"
-            /></a>
-            <a href="#">
-                <img
-                    src="https://logospng.org/download/apple/logo-apple-1024.png"
-            /></a>
-            <a href="#">
-                <img
-                    src="https://brandslogos.com/wp-content/uploads/images/large/linux-tux-logo-1.png"
-            /></a>
-            <a href="#">
-                <img
-                    src="https://brandslogos.com/wp-content/uploads/images/large/linux-tux-logo-1.png"
-            /></a>
-            <a href="#">
-                <img
-                    src="https://logospng.org/download/apple/logo-apple-1024.png"
-            /></a>
-            <a href="more.html"
-                ><img
-                    src="https://thefrisky.com/wp-content/uploads/2019/01/windows-logo-1.png"
-            /></a>
+        <div id="imageCarousel" class="carousel slide">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <a href="more.html"
+                        ><img class="d-block mx-auto object-fit-scale carouselimg"
+                            src="https://thefrisky.com/wp-content/uploads/2019/01/windows-logo-1.png"
+                    /></a>
+                </div>
+                <div class="carousel-item">
+                    <a href="#"
+                        ><img class="d-block mx-auto object-fit-scale carouselimg"
+                            src="https://logospng.org/download/apple/logo-apple-1024.png"
+                    /></a>
+                </div>
+                <div class="carousel-item">
+                    <a href="#"
+                        ><img class="d-block mx-auto object-fit-scale carouselimg"
+                            src="https://brandslogos.com/wp-content/uploads/images/large/linux-tux-logo-1.png"
+                    /></a>
+                </div>
+            </div>
         </div>
-        <div class="main-area">
-            <div class="small column-4 top">
-                <img src="https://logospng.org/download/apple/logo-apple-1024.png">
-                <p class="post-header">Заголовок</p>
+        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+
+        <div class="container d-flex flex-column align-items-center flex-md-row justify-content-evenly h-20 pt-10 my-auto">
+            <div class="d-flex flex-column border border-dark text-center smallcard">
+                <img class="smallimg" src="https://logospng.org/download/apple/logo-apple-1024.png">
+                <p class="fw-bold">Заголовок</p>
                 <p>Lorem ipsum</p>
             </div>
-            <div class="big column-1 middle">
-                <p class="post-header">Заголовок</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lobortis, sapien at blandit varius, diam ante aliquet nulla, at rutrum erat metus vitae lacus.</p>
-                <img src="https://logospng.org/download/apple/logo-apple-1024.png">
-                <div class="big-more-area">
-                    <a href="#"><p>Подробнее</p></a>
-                </div>
-            </div>
-            <div class="small column-2 top">
-                <img src="https://logospng.org/download/apple/logo-apple-1024.png">
-                <p class="post-header">Заголовок</p>
-                <p>Lorem ipsum</p>
-            </div>
-            <div class="big column-3 middle">
-                <img src="https://logospng.org/download/apple/logo-apple-1024.png">
-                <p class="post-header">Заголовок</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lobortis, sapien at blandit varius, diam ante aliquet nulla, at rutrum erat metus vitae lacus.</p>
-                <div class="big-more-area">
-                    <a href="#"><p>Подробнее</p></a>
-                </div>
-            </div>
-            <div class="small column-2 bottom">
-                <img src="https://logospng.org/download/apple/logo-apple-1024.png">
-                <p class="post-header">Заголовок</p>
-                <p>Lorem ipsum</p>
-            </div>
-            <div class="big column-5 middle">
-                <p class="post-header">Заголовок</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lobortis, sapien at blandit varius, diam ante aliquet nulla, at rutrum erat metus vitae lacus.</p>
-                <img src="https://logospng.org/download/apple/logo-apple-1024.png">
-                <div class="big-more-area">
-                    <a href="#"><p>Подробнее</p></a>
-                </div>
-            </div>
-            <div class="small column-4 bottom">
-                <img src="https://logospng.org/download/apple/logo-apple-1024.png">
-                <p class="post-header">Заголовок</p>
+            <div class="d-flex flex-column border border-dark text-center smallcard">
+                <img class="smallimg" src="https://logospng.org/download/apple/logo-apple-1024.png">
+                <p class="fw-bold">Заголовок</p>
                 <p>Lorem ipsum</p>
             </div>
         </div>
+
+        <div class="container d-flex flex-column align-items-center flex-md-row justify-content-between h-20 pt-10 my-auto">
+            <div class="d-flex flex-column text-center px-2 py-8 bigcard border rounded-16">
+                <p class="fw-bold">Заголовок</p>
+                <p class="text-wrap bigtext">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lobortis, sapien at blandit varius, diam ante aliquet nulla, at rutrum erat metus vitae lacus.</p>
+                <img class="bigimg" src="https://logospng.org/download/apple/logo-apple-1024.png">
+                <div class="text-end w-auto">
+                    <a href="#"><p>Подробнее</p></a>
+                </div>
+            </div>
+            <div class="d-flex flex-column text-center px-2 py-8 bigcard border rounded-16">
+                <img class="bigimg" src="https://logospng.org/download/apple/logo-apple-1024.png">
+                <p class="fw-bold">Заголовок</p>
+                <p class="text-wrap bigtext">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lobortis, sapien at blandit varius, diam ante aliquet nulla, at rutrum erat metus vitae lacus.</p>
+                <div class="text-end w-auto">
+                    <a href="#"><p>Подробнее</p></a>
+                </div>
+            </div>
+            <div class="d-flex flex-column text-center px-2 py-8 bigcard border rounded-16">
+                <p class="fw-bold">Заголовок</p>
+                <p class="text-wrap bigtext">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lobortis, sapien at blandit varius, diam ante aliquet nulla, at rutrum erat metus vitae lacus.</p>
+                <img class="bigimg" src="https://logospng.org/download/apple/logo-apple-1024.png">
+                <div class="text-end w-auto">
+                    <a href="#"><p>Подробнее</p></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="container d-flex flex-column align-items-center flex-md-row justify-content-evenly h-20 pt-10 my-auto">
+            <div class="d-flex flex-column border border-dark text-center smallcard">
+                <img class="smallimg" src="https://logospng.org/download/apple/logo-apple-1024.png">
+                <p class="fw-bold">Заголовок</p>
+                <p>Lorem ipsum</p>
+            </div>
+            <div class="d-flex flex-column border border-dark text-center smallcard">
+                <img class="smallimg" src="https://logospng.org/download/apple/logo-apple-1024.png">
+                <p class="fw-bold">Заголовок</p>
+                <p>Lorem ipsum</p>
+            </div>
+        </div>
+        
         <hr />
         <!-- <p>
             Операционная система является фундаментальным программным
