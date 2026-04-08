@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Калькулятор равнобедренного треугольника</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+
+    .error {
+        border: 2px solid red;
+    }
+
+    .error-text {
+        color: red;
+        font-size: 12px;
+    }
+
+    img {
+        width: 200px;
+        margin: 10px 0;
+    }
+
+    .result {
+        margin-top: 15px;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+
+<h2>Калькулятор равнобедренного треугольника</h2>
+
+<label>Тип входных данных:</label>
+<select id="type">
+    <option value="angle">Боковая сторона и угол при основании</option>
+    <option value="sides">Две стороны</option>
+</select>
+
+<button onclick="showForm()">Показать</button>
+
+<div id="form"></div>
+
+<div class="result" id="result"></div>
+
+<script>
+function showForm() {
+    const type = document.getElementById("type").value;
+    const form = document.getElementById("form");
+
+    let html = "";
+
+    if (type === "angle") {
+        html += `
+            <img src="tri1.jpg">
+            <div>
+                <label>Боковая сторона (a):</label><br>
+                <input type="number" id="a"><div class="error-text" id="errA"></div><br>
+
+                <label>Угол при основании (градусы):</label><br>
+                <input type="number" id="angle"><div class="error-text" id="errAngle"></div><br>
+            </div>
+        `;
+    } else {
+        html += `
+            <img src="tri2.jpg">
+            <div>
+                <label>Боковая сторона (a):</label><br>
+                <input type="number" id="a"><div class="error-text" id="errA"></div><br>
+
+                <label>Основание (b):</label><br>
+                <input type="number" id="b"><div class="error-text" id="errB"></div><br>
+            </div>
+        `;
+    }
+
+    html += `
+        <label>Что вычислить:</label><br>
+        <select id="calc" multiple>
+            <option value="r">Радиус вписанной</option>
+            <option value="R">Радиус описанной</option>
+            <option value="p">Периметр</option>
+        </select><br><br>
+
+        <button onclick="calculate()">Вычислить</button>
+        <button onclick="clearForm()">Очистить</button>
+    `;
+
+    form.innerHTML = html;
+}
+
+function clearErrors() {
+    document.querySelectorAll("input").forEach(i => i.classList.remove("error"));
+    document.querySelectorAll(".error-text").forEach(e => e.textContent = "");
+}
+
+function setError(id, message) {
+    document.getElementById(id).classList.add("error");
+    document.getElementById("err" + id.toUpperCase()).textContent = message;
+}
+
+function clearForm() {
+    // очищаем все поля ввода
+    document.querySelectorAll("input").forEach(input => {
+        input.value = "";
+        input.classList.remove("error");
+    });
+
+    // очищаем ошибки
+    document.querySelectorAll(".error-text").forEach(el => {
+        el.textContent = "";
+    });
+
+    // очищаем результат
+    document.getElementById("result").innerHTML = "";
+
+    // сбрасываем выбор в списке
+    const calc = document.getElementById("calc");
+    if (calc) {
+        Array.from(calc.options).forEach(option => option.selected = false);
+    }
+}
+
+function calculate() {
+    clearErrors();
+
+    const type = document.getElementById("type").value;
+    const selected = Array.from(document.getElementById("calc").selectedOptions).map(o => o.value);
+
+    let a = parseFloat(document.getElementById("a").value);
+    let b, angle;
+
+    let valid = true;
+
+    if (!a || a <= 0) {
+        setError("a", "Введите корректное значение");
+        valid = false;
+    }
+
+    if (type === "angle") {
+        angle = parseFloat(document.getElementById("angle").value);
+        if (!angle || angle <= 0 || angle >= 180) {
+            setError("angle", "Угол должен быть (0;180)");
+            valid = false;
+        }
+    } else {
+        b = parseFloat(document.getElementById("b").value);
+        if (!b || b <= 0 || b >= 2 * a) {
+            setError("b", "Основание должно быть меньше 2a");
+            valid = false;
+        }
+    }
+
+    if (!valid) return;
+
+    // вычисления
+    let perimeter, area, s, r, R;
+
+    if (type === "angle") {
+        let rad = angle * Math.PI / 180;
+
+        b = 2 * a * Math.sin(rad / 2);
+        let h = a * Math.cos(rad / 2);
+
+        area = (b * h) / 2;
+        perimeter = 2 * a + b;
+    } else {
+        let h = Math.sqrt(a * a - (b * b) / 4);
+        area = (b * h) / 2;
+        perimeter = 2 * a + b;
+    }
+
+    s = perimeter / 2;
+
+    r = area / s;
+    R = (a * a * b) / (4 * area);
+
+    let result = "";
+
+    if (selected.includes("p")) result += `Периметр: ${perimeter.toFixed(2)}<br>`;
+    if (selected.includes("r")) result += `Радиус вписанной: ${r.toFixed(2)}<br>`;
+    if (selected.includes("R")) result += `Радиус описанной: ${R.toFixed(2)}<br>`;
+
+    document.getElementById("result").innerHTML = result || "Выберите что вычислять";
+}
+
+// загрузка начального состояния
+showForm();
+</script>
+
+</body>
+</html>
