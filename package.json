@@ -1,0 +1,11 @@
+{
+  "name": "os-rating-react",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "live-server --open=./list.html --port=3000"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
