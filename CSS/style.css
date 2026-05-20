@@ -1,0 +1,113 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    background: #fff;
+    padding: 10px;
+}
+
+.page-wrapper {
+    padding: 10px 14px 14px 14px;
+    max-width: 900px;
+}
+
+h3 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.settings-form {
+    margin-bottom: 8px;
+}
+
+.settings-form p {
+    margin: 6px 0 2px 0;
+    font-size: 13px;
+}
+
+.settings-form label {
+    display: block;
+    font-size: 13px;
+    margin-left: 4px;
+}
+
+.settings-form select {
+    font-size: 13px;
+    margin-left: 4px;
+}
+
+.error-msg {
+    color: red;
+    font-size: 12px;
+    margin: 4px 0;
+    display: none;
+}
+
+button {
+    font-size: 12px;
+    padding: 2px 8px;
+    cursor: pointer;
+    background: #e0e0e0;
+    border: 1px solid #888;
+    border-radius: 2px;
+    margin: 4px 0;
+}
+
+button:hover {
+    background: #d0d0d0;
+}
+
+svg {
+    width: 860px;
+    height: 360px;
+    display: block;
+    margin: 6px 0;
+}
+
+svg path, svg line {
+    fill: none;
+    stroke: #333;
+    stroke-width: 1px;
+}
+
+svg text {
+    font: 8px Verdana, sans-serif;
+}
+
+.domain  { stroke: #333; }
+.tick line { stroke: #333; }
+
+#build {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 6px;
+    font-size: 12px;
+}
+
+#build th {
+    background: #4a4a4a;
+    color: #fff;
+    padding: 4px 8px;
+    border: 1px solid #888;
+    text-align: center;
+    font-weight: bold;
+}
+
+#build td {
+    padding: 3px 8px;
+    border: 1px solid #ccc;
+}
+
+#build tr:nth-child(odd) td  { background: #fff; }
+#build tr:nth-child(even) td { background: #f2f2f2; }
+#build tr:hover td           { background: #dde8f5; }
+
+.toggle-btn {
+    margin: 4px 0 6px 0;
+}
