@@ -48,7 +48,9 @@ function updateChart() {
     const yKey = yField.value;
     const type = chartType.value;
 
-    const data = [...osData];
+    let filtered = filterData(osData);
+    let sorted = sortData(filtered);
+    const data = [...sorted];
 
     const xValues = data.map(d => d[xKey]);
     const yValues = data.map(d => +d[yKey]);
