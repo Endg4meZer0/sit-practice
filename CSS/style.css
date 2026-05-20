@@ -1,0 +1,66 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 12px;
+}
+
+h1 {
+    margin-bottom: 16px;
+}
+
+.to-line {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+form {
+    width: 600px;
+    border: 1px solid gray;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 40px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.block {
+    min-width: 180px;
+}
+
+.block h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.controls {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.options {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+svg {
+    width: 600px;
+    height: 600px;
+    border: 1px solid gray;
+    display: block;
+    flex-shrink: 0;
+}
+
+.hidden {
+    display: none;
+}

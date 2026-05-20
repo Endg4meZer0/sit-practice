@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Лабораторная работа D3</title>
+    <link rel="stylesheet" href="CSS/style.css" />
+
+    <script src="libs/d3.v7.js"></script>
+    <script src="JavaScript/image.js"></script>
+    <script src="JavaScript/path.js"></script>
+    <script src="JavaScript/main.js" defer></script>
+</head>
+
+<body>
+    <h1>Лабораторная работа: D3</h1>
+
+    <div class="to-line">
+        <form id="setting">
+            <div class="form-row">
+                <div class="block">
+                    <h3>Координаты рисунка</h3>
+                    <label for="cx">x:</label>
+                    <input type="number" id="cx" value="300"><br><br>
+
+                    <label for="cy">y:</label>
+                    <input type="number" id="cy" value="300">
+                </div>
+
+                <div class="block">
+                    <h3>Масштаб</h3>
+                    <label for="scaleX">по x:</label>
+                    <input type="number" id="scaleX" value="1"><br><br>
+
+                    <label for="scaleY">по y:</label>
+                    <input type="number" id="scaleY" value="1">
+                </div>
+
+                <div class="block">
+                    <h3>Поворот</h3>
+                    <label for="angle">угол:</label>
+                    <input type="number" id="angle" value="0">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="block hidden" id="coordsFinishBlock">
+                    <h3>Конечные координаты</h3>
+                    <label for="cx_finish">x:</label>
+                    <input type="number" id="cx_finish" value="500"><br><br>
+
+                    <label for="cy_finish">y:</label>
+                    <input type="number" id="cy_finish" value="500">
+                </div>
+
+                <div class="block hidden" id="scaleFinishBlock">
+                    <h3>Конечный масштаб</h3>
+                    <label for="scaleX_finish">по x:</label>
+                    <input type="number" id="scaleX_finish" value="2"><br><br>
+
+                    <label for="scaleY_finish">по y:</label>
+                    <input type="number" id="scaleY_finish" value="2">
+                </div>
+
+                <div class="block hidden" id="rotateFinishBlock">
+                    <h3>Конечный поворот</h3>
+                    <label for="angle_finish">угол:</label>
+                    <input type="number" id="angle_finish" value="360">
+                </div>
+            </div>
+
+            <div class="block hidden" id="easeLabel">
+                <label for="easeType"><strong>Функция плавности:</strong></label>
+                <select id="easeType">
+                    <option value="linear">Linear</option>
+                    <option value="elastic">Elastic</option>
+                    <option value="bounce">Bounce</option>
+                </select>
+            </div>
+
+            <div class="block hidden" id="pathBlock" style="margin-top: 12px;">
+                <label for="pathType"><strong>Тип пути:</strong></label>
+                <select id="pathType">
+                    <option value="0">Г-образный</option>
+                    <option value="1">Круговой</option>
+                </select>
+            </div>
+
+            <div class="controls" style="margin-top: 16px;">
+                <button type="button" id="drawBtn">Нарисовать</button>
+                <button type="button" id="animateBtn" class="hidden">Анимировать</button>
+                <button type="button" id="clearBtn">Очистить</button>
+            </div>
+
+            <div class="options">
+                <label><input type="checkbox" id="enableAnimation"> Включить анимацию?</label>
+                <label><input type="checkbox" id="moveByPath"> Перемещение вдоль пути?</label>
+            </div>
+        </form>
+
+        <svg>
+            <defs>
+                <pattern id="smallGrid" width="10" height="10" patternUnits="userSpaceOnUse">
+                    <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#e0e0e0" stroke-width="0.5" />
+                </pattern>
+                <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
+                    <rect width="100" height="100" fill="url(#smallGrid)" />
+                    <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#b0b0b0" stroke-width="1" />
+                </pattern>
+            </defs>
+            <rect id="grid-bg" width="100%" height="100%" fill="url(#grid)" />
+            <g id="canvas"></g>
+        </svg>
+    </div>
+</body>
+
+</html>
