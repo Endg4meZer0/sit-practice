@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Фильтры и сортировка</title>
+  <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+
+  <div class="forms-row">
+
+    <div class="panel">
+      <div class="panel-title">Фильтр</div>
+      <form id="filter">
+        <p>
+          <label for="structure">Название:</label>
+          <input type="text" id="structure">
+        </p>
+        <p>
+          <label for="category">Тип:</label>
+          <input type="text" id="category">
+        </p>
+        <p>
+          <label for="country">Страна:</label>
+          <input type="text" id="country">
+        </p>
+        <p>
+          <label for="city">Город:</label>
+          <input type="text" id="city">
+        </p>
+        <p>
+          <label for="yearFrom">Год:</label>
+          от <input type="number" id="yearFrom">
+          до <input type="number" id="yearTo">
+        </p>
+        <p>
+          <label for="heightFrom">Высота:</label>
+          от <input type="number" id="heightFrom">
+          до <input type="number" id="heightTo">
+        </p>
+        <div class="btn-group">
+          <input type="button" value="Найти">
+          <input type="button" value="Очистить фильтры">
+        </div>
+      </form>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Сортировка</div>
+      <form id="sort">
+        <p class="sort-label">Сортировать по</p>
+        <p>
+          <select id="fieldsFirst"></select>
+          по убыванию? <input type="checkbox" id="fieldsFirstDesc">
+        </p>
+        <p>
+          <select id="fieldsSecond"></select>
+          по убыванию? <input type="checkbox" id="fieldsSecondDesc">
+        </p>
+        <div class="btn-group">
+          <input type="button" value="Сортировать">
+          <input type="button" value="Сбросить сортировку">
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+  <table id="list"></table>
+
+  <script src="JavaScript/data.js"></script>
+  <script src="JavaScript/table.js"></script>
+  <script src="JavaScript/filter.js"></script>
+  <script src="JavaScript/sort.js"></script>
+  <script src="JavaScript/main.js"></script>
+
+</body>
+</html>

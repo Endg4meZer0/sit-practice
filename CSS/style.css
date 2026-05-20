@@ -1,0 +1,105 @@
+body {
+  font-size: 14px;
+  margin: 20px;
+  background: #fff;
+  color: #000;
+}
+
+.forms-row {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.panel {
+  border: 1px solid #ccc;
+  padding: 12px 16px;
+}
+
+.panel-title {
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Фильтр */
+#filter p {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0 0 6px 0;
+}
+
+#filter label {
+  min-width: 70px;
+}
+
+#filter input[type="text"] {
+  width: 140px;
+  padding: 2px 4px;
+  border: 1px solid #999;
+}
+
+#filter input[type="number"] {
+  width: 60px;
+  padding: 2px 4px;
+  border: 1px solid #999;
+}
+
+.sort-label {
+  margin: 0 0 6px 0;
+}
+
+#sort p {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 6px 0;
+}
+
+#sort select {
+  padding: 2px 4px;
+  border: 1px solid #999;
+  min-width: 110px;
+}
+
+#sort select:disabled {
+  color: #999;
+}
+
+.btn-group {
+  margin-top: 8px;
+}
+
+input[type="button"] {
+  padding: 3px 10px;
+  border: 1px solid #999;
+  background: #f0f0f0;
+  cursor: pointer;
+  font-size: 13px;
+  margin-right: 4px;
+}
+
+#list {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+#list tr:first-child th {
+  background: #d0d0d0;
+  font-weight: bold;
+  text-align: center;
+  padding: 6px 10px;
+  border: 1px solid #aaa;
+}
+
+#list td {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+}
+
+#list tbody tr:hover {
+  background: #f5f5f5;
+}
