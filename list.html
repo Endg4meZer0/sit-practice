@@ -11,29 +11,54 @@
             </p>
             <hr />
         </header>
-        <details open="true">
-            <summary>График</summary>
-            <form action="graphic" method="get">
-                <fieldset>
-                    <legend>Значение оси OX</legend>
-                    <input type="radio" name="x" value="all" checked /> Все ОС
-                    <br />
-                    <input type="radio" name="x" value="win" /> Версии Windows
-                    <br />
-                    <input type="radio" name="x" value="mac" /> Версии MacOS
-                    <br />
-                    <input type="radio" name="x" value="linux" /> Версии Linux
-                </fieldset>
-                <fieldset>
-                    <legend>Значение оси OY</legend>
-                    <input type="checkbox" name="y" value="kolvo" /> Кол-во
-                    установок
-                    <br />
-                    <input type="checkbox" name="y" value="dolya" /> Доля рынка
-                </fieldset>
-                <input type="submit" value="Сформировать" />
-            </form>
-        </details>
+        
+        <div class="viz-section">
+            <button id="vizToggle" class="viz-toggle">
+                ▼ Показать визуализацию
+            </button>
+
+            <div id="vizPanel" style="display:none;">
+                <div class="viz-controls">
+
+                    <div class="viz-control-group">
+                        <label for="chartType">Тип диаграммы</label>
+                        <select id="chartType">
+                            <option value="bar">Столбчатая</option>
+                            <option value="line">Линейная</option>
+                            <option value="scatter">Точечная</option>
+                        </select>
+                    </div>
+
+                    <div class="viz-control-group">
+                        <label for="xField">Ось X</label>
+                        <select id="xField">
+                            <option value="family">Семья ОС</option>
+                            <option value="name">Название ОС</option>
+                        </select>
+                    </div>
+
+                    <div class="viz-control-group">
+                        <label for="yField">Ось Y</label>
+                        <select id="yField">
+                            <option value="users">Кол-во установок</option>
+                            <option value="sharePercent">Доля рынка</option>
+                            <option value="sharePercentOS">
+                                Доля внутри семьи ОС
+                            </option>
+                        </select>
+                    </div>
+
+                    <span id="vizCount" class="viz-count"></span>
+                </div>
+
+                <div id="vizLegend" class="viz-legend"></div>
+
+                <svg id="vizChart"></svg>
+
+                <div id="vizTooltip" class="viz-tooltip"></div>
+            </div>
+        </div>
+
         <details open="true">
             <summary>Фильтр</summary>
                 <label>Семья ОС:
@@ -128,6 +153,8 @@
 
         <script src="scripts/data.js"></script>
         <script src="scripts/list.js"></script>
+        <script src="libs/d3.v7.js"></script>
+        <script src="scripts/viz.js"></script>
 
         <footer>
             <hr />
