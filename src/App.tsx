@@ -4,9 +4,10 @@ import './App.css';
 import ListPage from './pages/ListPage';
 import MainPage from './pages/MainPage';
 import MorePage from './pages/MorePage';
+import QuizPage from './pages/QuizPage';
 
 type RouteState = {
-  page: 'main' | 'list' | 'more';
+  page: 'main' | 'list' | 'more' | 'quiz';
   slug?: string;
 };
 
@@ -20,6 +21,9 @@ const parseHash = (hash: string): RouteState => {
   }
   if (cleaned === 'list') {
     return { page: 'list' };
+  }
+  if (cleaned === 'quiz') {
+    return { page: 'quiz' };
   }
   return { page: 'main' };
 };
@@ -40,6 +44,7 @@ const App: React.FC = () => {
       {route.page === 'main' && <MainPage isMobile={isMobile} />}
       {route.page === 'list' && <ListPage isMobile={isMobile} />}
       {route.page === 'more' && <MorePage slug={route.slug} isMobile={isMobile} />}
+      {route.page === 'quiz' && <QuizPage />}
     </Box>
   );
 };

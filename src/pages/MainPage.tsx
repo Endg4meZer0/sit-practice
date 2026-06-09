@@ -63,6 +63,20 @@ const MainPage: React.FC<MainPageProps> = ({ isMobile }) => {
             >
               Рейтинг операционных систем
             </Button>
+            <Button
+              component="a"
+              href="#quiz"
+              sx={{
+                textTransform: 'none',
+                padding: '4px 12px',
+                fontSize: '16px',
+                color: '#2498f3',
+                borderRadius: '8px',
+                '&:hover': { backgroundColor: 'rgba(36, 152, 243, 0.08)' },
+              }}
+            >
+              Пройти тест
+            </Button>
           </Box>
         </Box>
 
