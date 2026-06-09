@@ -21,6 +21,12 @@ function App() {
     { field: "none", order: "asc" }
   ]);
   const [page, setPage] = useState(1);
+  const [chartType, setChartType] = useState("bar");
+  const [groupBy, setGroupBy] = useState("family");
+  const [chartMetric, setChartMetric] = useState("users");
+  const [chartX, setChartX] = useState("users");
+  const [chartY, setChartY] = useState("sharePercent");
+  const [aggregation, setAggregation] = useState("sum");
   const pageSize = 8;
 
   const parseNumber = (value) => {
@@ -67,6 +73,157 @@ function App() {
       return true;
     });
   }, [filters]);
+
+  const groupedData = useMemo(() => {
+    const groups = {};
+    filteredData.forEach((item) => {
+      const key = item.family;
+      if (!groups[key]) {
+        groups[key] = {
+          family: key,
+          users: 0,
+          sharePercent: 0,
+          sharePercentOS: 0,
+          count: 0
+        };
+      }
+      groups[key].users += item.users;
+      groups[key].sharePercent += item.sharePercent;
+      groups[key].sharePercentOS += item.sharePercentOS;
+      groups[key].count += 1;
+    });
+    return Object.values(groups);
+  }, [filteredData]);
+
+  const metricOptions = [
+    { value: "users", label: "Кол-во установок" },
+    { value: "sharePercent", label: "Доля использования" },
+    { value: "sharePercentOS", label: "Доля использования в семье ОС" }
+  ];
+
+  const getMetricValue = (group, metric) => {
+    if (aggregation === "average") {
+      return group.count === 0 ? 0 : group[metric] / group.count;
+    }
+    return group[metric];
+  };
+
+  const chartData = useMemo(() => {
+    if (groupedData.length === 0) {
+      return [];
+    }
+
+    if (chartType === "bar") {
+      return groupedData.map((group) => ({
+        label: group.family,
+        value: getMetricValue(group, chartMetric)
+      }));
+    }
+
+    return groupedData.map((group) => ({
+      label: group.family,
+      x: getMetricValue(group, chartX),
+      y: getMetricValue(group, chartY)
+    }));
+  }, [groupedData, chartType, chartMetric, chartX, chartY, aggregation]);
+
+  const renderBarChart = () => {
+    if (chartData.length === 0) {
+      return e("p", null, "Нет данных для диаграммы.");
+    }
+
+    const width = 740;
+    const height = 360;
+    const padding = { top: 20, right: 20, bottom: 80, left: 70 };
+    const innerWidth = width - padding.left - padding.right;
+    const innerHeight = height - padding.top - padding.bottom;
+    const maxValue = Math.max(...chartData.map((item) => item.value), 1);
+    const barCount = chartData.length;
+    const barStep = barCount ? innerWidth / barCount : innerWidth;
+    const barWidth = Math.max(36, Math.min(80, barStep * 0.6));
+
+    return e("svg", { width, height, viewBox: `0 0 ${width} ${height}` },
+      e("g", { transform: `translate(${padding.left},${padding.top})` },
+        e("line", { x1: 0, y1: 0, x2: 0, y2: innerHeight, stroke: "#68768d", strokeWidth: 1 }),
+        e("line", { x1: 0, y1: innerHeight, x2: innerWidth, y2: innerHeight, stroke: "#68768d", strokeWidth: 1 }),
+        Array.from({ length: 5 }, (_, index) => {
+          const y = innerHeight - (innerHeight / 4) * index;
+          const value = (maxValue / 4) * index;
+          return e("g", { key: `y-tick-${index}` },
+            e("line", { x1: 0, y1: y, x2: innerWidth, y2: y, stroke: "#e6e9f0", strokeWidth: 1 }),
+            e("text", { x: -10, y: y + 4, textAnchor: "end", fontSize: 12, fill: "#333" }, value.toFixed(1))
+          );
+        }),
+        chartData.map((item, index) => {
+          const barHeight = (item.value / maxValue) * innerHeight;
+          const x = index * barStep + (barStep - barWidth) / 2;
+          const y = innerHeight - barHeight;
+          return e("g", { key: item.label },
+            e("rect", { x, y, width: barWidth, height: barHeight, fill: "#4f75f5", rx: 4 }),
+            e("text", { x: x + barWidth / 2, y: y - 8, textAnchor: "middle", fontSize: 12, fill: "#1f2937" }, item.value.toFixed(1)),
+            e("text", { x: x + barWidth / 2, y: innerHeight + 18, textAnchor: "middle", fontSize: 12, fill: "#222" }, item.label)
+          );
+        })
+      )
+    );
+  };
+
+  const renderScatterChart = () => {
+    if (chartData.length === 0) {
+      return e("p", null, "Нет данных для диаграммы.");
+    }
+
+    const width = 740;
+    const height = 360;
+    const padding = { top: 24, right: 24, bottom: 70, left: 70 };
+    const innerWidth = width - padding.left - padding.right;
+    const innerHeight = height - padding.top - padding.bottom;
+    const xMax = Math.max(...chartData.map((item) => item.x), 1);
+    const yMax = Math.max(...chartData.map((item) => item.y), 1);
+
+    const xScale = (value) => (value / xMax) * innerWidth;
+    const yScale = (value) => innerHeight - (value / yMax) * innerHeight;
+
+    return e("svg", { width, height, viewBox: `0 0 ${width} ${height}` },
+      e("g", { transform: `translate(${padding.left},${padding.top})` },
+        e("line", { x1: 0, y1: 0, x2: 0, y2: innerHeight, stroke: "#68768d", strokeWidth: 1 }),
+        e("line", { x1: 0, y1: innerHeight, x2: innerWidth, y2: innerHeight, stroke: "#68768d", strokeWidth: 1 }),
+        Array.from({ length: 5 }, (_, index) => {
+          const x = (innerWidth / 4) * index;
+          const xValue = (xMax / 4) * index;
+          return e("g", { key: `x-grid-${index}` },
+            e("line", { x1: x, y1: 0, x2: x, y2: innerHeight, stroke: "#e6e9f0", strokeWidth: 1 }),
+            e("text", { x, y: innerHeight + 18, textAnchor: "middle", fontSize: 12, fill: "#333" }, xValue.toFixed(1))
+          );
+        }),
+        Array.from({ length: 5 }, (_, index) => {
+          const y = innerHeight - (innerHeight / 4) * index;
+          const yValue = (yMax / 4) * index;
+          return e("g", { key: `y-grid-${index}` },
+            e("line", { x1: 0, y1: y, x2: innerWidth, y2: y, stroke: "#e6e9f0", strokeWidth: 1 }),
+            e("text", { x: -10, y: y + 4, textAnchor: "end", fontSize: 12, fill: "#333" }, yValue.toFixed(1))
+          );
+        }),
+        chartData.map((item) => {
+          const x = xScale(item.x);
+          const y = yScale(item.y);
+          return e("g", { key: item.label },
+            e("circle", { cx: x, cy: y, r: 7, fill: "#4f75f5" }),
+            e("text", { x: x + 12, y: y - 10, fontSize: 12, fill: "#1f2937" }, item.label)
+          );
+        }),
+        e("text", { x: innerWidth / 2, y: innerHeight + 50, textAnchor: "middle", fontSize: 14, fill: "#222" }, metricOptions.find((option) => option.value === chartX)?.label || chartX),
+        e("text", { x: -50, y: innerHeight / 2, textAnchor: "middle", fontSize: 14, fill: "#222", transform: `rotate(-90 -50 ${innerHeight / 2})` }, metricOptions.find((option) => option.value === chartY)?.label || chartY)
+      )
+    );
+  };
+
+  const renderChart = () => {
+    if (chartType === "bar") {
+      return renderBarChart();
+    }
+    return renderScatterChart();
+  };
 
   const sortedData = useMemo(() => {
     return [...filteredData].sort((a, b) => {
@@ -236,6 +393,74 @@ function App() {
             )
           )
         )
+      )
+    ),
+    e("section", { className: "section" },
+      e("h2", null, "Диаграмма"),
+      e("div", { className: "chart-form" },
+        e("div", { className: "control" },
+          e("label", null,
+            "Тип диаграммы",
+            e("select", { value: chartType, onChange: (e) => setChartType(e.target.value) },
+              e("option", { value: "bar" }, "Столбчатая"),
+              e("option", { value: "scatter" }, "Точечная")
+            )
+          )
+        ),
+        e("div", { className: "control" },
+          e("label", null,
+            "Группировка",
+            e("select", { value: groupBy, onChange: (e) => setGroupBy(e.target.value) },
+              e("option", { value: "family" }, "Семья ОС")
+            )
+          )
+        ),
+        e("div", { className: "control" },
+          e("label", null,
+            "Агрегация",
+            e("select", { value: aggregation, onChange: (e) => setAggregation(e.target.value) },
+              e("option", { value: "sum" }, "Сумма"),
+              e("option", { value: "average" }, "Среднее")
+            )
+          )
+        ),
+        chartType === "bar" && e("div", { className: "control" },
+          e("label", null,
+            "Метрика",
+            e("select", { value: chartMetric, onChange: (e) => setChartMetric(e.target.value) },
+              metricOptions.map((field) =>
+                e("option", { key: field.value, value: field.value }, field.label)
+              )
+            )
+          )
+        ),
+        chartType === "scatter" && e("div", { className: "control" },
+          e("label", null,
+            "Ось X",
+            e("select", { value: chartX, onChange: (e) => setChartX(e.target.value) },
+              metricOptions.map((field) =>
+                e("option", { key: field.value, value: field.value }, field.label)
+              )
+            )
+          )
+        ),
+        chartType === "scatter" && e("div", { className: "control" },
+          e("label", null,
+            "Ось Y",
+            e("select", { value: chartY, onChange: (e) => setChartY(e.target.value) },
+              metricOptions.map((field) =>
+                e("option", { key: field.value, value: field.value }, field.label)
+              )
+            )
+          )
+        )
+      ),
+      e("div", { className: "chart-card" },
+        e("div", { className: "chart-meta" },
+          e("p", null, `Статус: выбрана ${chartType === "bar" ? "столбчатая" : "точечная"} диаграмма, метрика: ${chartType === "bar" ? metricOptions.find((field) => field.value === chartMetric)?.label : `${metricOptions.find((field) => field.value === chartX)?.label} и ${metricOptions.find((field) => field.value === chartY)?.label}`}`),
+          e("p", null, `Группировка по: ${groupBy === "family" ? "семье ОС" : groupBy}`)
+        ),
+        e("div", { className: "chart-container" }, renderChart())
       )
     ),
     e("section", { className: "section" },
