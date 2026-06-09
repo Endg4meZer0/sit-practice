@@ -76,11 +76,13 @@ function App() {
 
   const groupedData = useMemo(() => {
     const groups = {};
+    const groupField = groupBy === "family" ? "family" : "name";
     filteredData.forEach((item) => {
-      const key = item.family;
+      const key = item[groupField];
       if (!groups[key]) {
         groups[key] = {
-          family: key,
+          family: item.family,
+          name: item.name,
           users: 0,
           sharePercent: 0,
           sharePercentOS: 0,
@@ -93,7 +95,13 @@ function App() {
       groups[key].count += 1;
     });
     return Object.values(groups);
-  }, [filteredData]);
+  }, [filteredData, groupBy]);
+
+  const familyColors = {
+    "Windows": "#4F81BD",
+    "Linux": "#F2C811",
+    "macOS": "#999999"
+  };
 
   const metricOptions = [
     { value: "users", label: "Кол-во установок" },
@@ -113,19 +121,23 @@ function App() {
       return [];
     }
 
+    const labelField = groupBy === "family" ? "family" : "name";
+
     if (chartType === "bar") {
       return groupedData.map((group) => ({
-        label: group.family,
+        label: group[labelField],
+        family: group.family,
         value: getMetricValue(group, chartMetric)
       }));
     }
 
     return groupedData.map((group) => ({
-      label: group.family,
+      label: group[labelField],
+      family: group.family,
       x: getMetricValue(group, chartX),
       y: getMetricValue(group, chartY)
     }));
-  }, [groupedData, chartType, chartMetric, chartX, chartY, aggregation]);
+  }, [groupedData, chartType, chartMetric, chartX, chartY, aggregation, groupBy]);
 
   const renderBarChart = () => {
     if (chartData.length === 0) {
@@ -151,15 +163,16 @@ function App() {
           const value = (maxValue / 4) * index;
           return e("g", { key: `y-tick-${index}` },
             e("line", { x1: 0, y1: y, x2: innerWidth, y2: y, stroke: "#e6e9f0", strokeWidth: 1 }),
-            e("text", { x: -10, y: y + 4, textAnchor: "end", fontSize: 12, fill: "#333" }, value.toFixed(1))
+            e("text", { x: -10, y: y + 4, textAnchor: "end", fontSize: 8, fill: "#333" }, value.toFixed(1))
           );
         }),
         chartData.map((item, index) => {
           const barHeight = (item.value / maxValue) * innerHeight;
           const x = index * barStep + (barStep - barWidth) / 2;
           const y = innerHeight - barHeight;
+          const barColor = familyColors[item.family] || "#4f75f5";
           return e("g", { key: item.label },
-            e("rect", { x, y, width: barWidth, height: barHeight, fill: "#4f75f5", rx: 4 }),
+            e("rect", { x, y, width: barWidth, height: barHeight, fill: barColor, rx: 4 }),
             e("text", { x: x + barWidth / 2, y: y - 8, textAnchor: "middle", fontSize: 12, fill: "#1f2937" }, item.value.toFixed(1)),
             e("text", { x: x + barWidth / 2, y: innerHeight + 18, textAnchor: "middle", fontSize: 12, fill: "#222" }, item.label)
           );
@@ -207,8 +220,9 @@ function App() {
         chartData.map((item) => {
           const x = xScale(item.x);
           const y = yScale(item.y);
+          const dotColor = familyColors[item.family] || "#4f75f5";
           return e("g", { key: item.label },
-            e("circle", { cx: x, cy: y, r: 7, fill: "#4f75f5" }),
+            e("circle", { cx: x, cy: y, r: 7, fill: dotColor }),
             e("text", { x: x - 12, y: y - 10, textAnchor: "end", fontSize: 12, fill: "#1f2937" }, item.label)
           );
         }),
@@ -408,9 +422,10 @@ function App() {
         ),
         e("div", { className: "control" },
           e("label", null,
-            "Группировка",
+            "Значения",
             e("select", { value: groupBy, onChange: (e) => setGroupBy(e.target.value) },
-              e("option", { value: "family" }, "Семья ОС")
+              e("option", { value: "family" }, "Семья ОС"),
+              e("option", { value: "name" }, "Название ОС")
             )
           )
         ),
@@ -457,7 +472,7 @@ function App() {
       e("div", { className: "chart-card" },
         e("div", { className: "chart-meta" },
           e("p", null, `Статус: выбрана ${chartType === "bar" ? "столбчатая" : "точечная"} диаграмма, метрика: ${chartType === "bar" ? metricOptions.find((field) => field.value === chartMetric)?.label : `${metricOptions.find((field) => field.value === chartX)?.label} и ${metricOptions.find((field) => field.value === chartY)?.label}`}`),
-          e("p", null, `Группировка по: ${groupBy === "family" ? "семье ОС" : groupBy}`)
+          e("p", null, `Значения: ${groupBy === "family" ? "семье ОС" : "названию ОС"}`)
         ),
         e("div", { className: "chart-container" }, renderChart())
       )
