@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import {
-  AppBar,
-  Toolbar,
   Box,
   Card,
   CardMedia,
@@ -11,7 +9,6 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
 import './App.css';
 
 interface ImageItem {
@@ -37,8 +34,8 @@ const App: React.FC = () => {
   const galleryImages: ImageItem[] = [
     { id: 1, src: 'https://thefrisky.com/wp-content/uploads/2019/01/windows-logo-1.png' },
     { id: 2, src: 'https://logospng.org/download/apple/logo-apple-1024.png' },
-    { id: 3, src: 'https://brandslogos.com/wp-content/uploads/images/large/linux-tux-logo-1.png' },
-    { id: 4, src: 'https://brandslogos.com/wp-content/uploads/images/large/linux-tux-logo-1.png' },
+    { id: 3, src: 'https://i.etsystatic.com/21812990/r/il/1b6940/2314861823/il_fullxfull.2314861823_gvzf.jpg' },
+    { id: 4, src: 'https://i.etsystatic.com/21812990/r/il/1b6940/2314861823/il_fullxfull.2314861823_gvzf.jpg' },
     { id: 5, src: 'https://logospng.org/download/apple/logo-apple-1024.png' },
     { id: 6, src: 'https://thefrisky.com/wp-content/uploads/2019/01/windows-logo-1.png' },
   ];
@@ -68,132 +65,139 @@ const App: React.FC = () => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       {/* Header */}
-      <AppBar position="static" sx={{ backgroundColor: 'white', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
-        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', minHeight: '64px' }}>
-          <Box sx={{ display: 'flex', gap: 3 }}>
+      <Box
+        component="header"
+        sx={{
+          border: 'thin solid #dddddd',
+          borderRadius: '4px',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          width: '90%',
+          margin: '20px auto 0',
+          padding: '8px 12px',
+          flexWrap: 'wrap',
+          gap: 2,
+        }}
+      >
+        <Box sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 1, alignItems: 'center' }}>
+          <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', alignItems: 'center' }}>
             <Button
+              component="a"
               href="#"
               sx={{
-                color: '#2498f3',
-                fontWeight: 'bold',
-                fontSize: '16px',
                 textTransform: 'none',
-                '&:hover': { backgroundColor: 'transparent' },
+                padding: '4px 12px',
+                fontSize: '16px',
+                borderRadius: '8px',
+                fontWeight: 'bold',
+                backgroundColor: '#2498f3',
+                color: 'white',
+                '&:hover': { backgroundColor: '#2498f3' },
               }}
             >
               Операционные системы
             </Button>
-            {!isMobile && (
-              <Button
-                href="#"
-                sx={{
-                  color: '#2498f3',
-                  fontSize: '16px',
-                  textTransform: 'none',
-                  '&:hover': { backgroundColor: 'transparent' },
-                }}
-              >
-                Рейтинг операционных систем
-              </Button>
-            )}
-          </Box>
-          <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-            <TextField
-              placeholder="Найти"
-              size="small"
-              variant="outlined"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              sx={{ width: '200px' }}
-            />
             <Button
-              variant="contained"
+              component="a"
+              href="list.html"
               sx={{
-                backgroundColor: '#2498f3',
-                color: 'white',
                 textTransform: 'none',
-                display: 'flex',
-                gap: 0.5,
+                padding: '4px 12px',
+                fontSize: '16px',
+                color: '#2498f3',
+                borderRadius: '8px',
+                '&:hover': { backgroundColor: 'rgba(36, 152, 243, 0.08)' },
               }}
-              onClick={handleSearch}
             >
-              <SearchIcon fontSize="small" />
-              Поиск
+              Рейтинг операционных систем
             </Button>
           </Box>
-        </Toolbar>
-      </AppBar>
+        </Box>
+
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
+          <TextField
+            placeholder="Найти"
+            size="small"
+            variant="outlined"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            sx={{
+              width: '180px',
+              '& .MuiInputBase-root': {
+                height: '28px',
+              },
+            }}
+          />
+          <Button
+            component="a"
+            href="#"
+            onClick={handleSearch}
+            sx={{
+              color: 'white',
+              backgroundColor: '#2498f3',
+              textTransform: 'none',
+              padding: '4px 10px',
+              borderRadius: '4px',
+              '&:hover': { backgroundColor: '#1976d2' },
+            }}
+          >
+            Поиск
+          </Button>
+        </Box>
+      </Box>
 
       {/* Gallery */}
-      {!isMobile && (
-        <Box
-          sx={{
-            width: '90%',
-            margin: '30px auto',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gridTemplateRows: 'repeat(2, 150px)',
-            gap: '15px',
-          }}
-        >
-          {galleryImages.map((img, index) => (
-            <Box
-              key={img.id}
-              component="a"
-              href={index === 0 || index === 5 ? 'more.html' : '#'}
-              sx={{
-                gridColumn: index === 0 || index === 5 ? '1' : undefined,
-                gridRow: index === 0 || index === 5 ? '1 / 3' : undefined,
-                display: 'block',
-                overflow: 'hidden',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                '& img': {
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                },
-              }}
-            >
-              <img src={img.src} alt={`OS Logo ${img.id}`} />
-            </Box>
-          ))}
-        </Box>
-      )}
+      <Box
+        sx={{
+          width: '90%',
+          margin: '30px auto',
+          display: 'grid',
+          gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
+          gridTemplateRows: isMobile ? 'auto' : 'repeat(2, 150px)',
+          gap: '15px',
+        }}
+      >
+        {galleryImages.map((img, index) => {
+          const positionStyles = isMobile
+            ? {}
+            : index === 0
+            ? { gridColumn: 1, gridRow: '1 / 3' }
+            : index === 5
+            ? { gridColumn: 4, gridRow: '1 / 3' }
+            : index === 1
+            ? { gridColumn: 2, gridRow: 1 }
+            : index === 2
+            ? { gridColumn: 3, gridRow: 1 }
+            : index === 3
+            ? { gridColumn: 2, gridRow: 2 }
+            : { gridColumn: 3, gridRow: 2 };
 
-      {isMobile && (
-        <Box
-          sx={{
-            width: '90%',
-            margin: '30px auto',
-            display: 'grid',
-            gridTemplateColumns: '1fr',
-            gap: '15px',
-          }}
-        >
-          {galleryImages.map((img, index) => (
+          return (
             <Box
               key={img.id}
               component="a"
               href={index === 0 || index === 5 ? 'more.html' : '#'}
               sx={{
-                display: 'block',
+                ...positionStyles,
                 overflow: 'hidden',
+                display: 'block',
                 borderRadius: '4px',
                 cursor: 'pointer',
-                height: '150px',
                 '& img': {
                   width: '100%',
-                  height: '100%',
+                  height: isMobile ? '150px' : '100%',
                   objectFit: 'cover',
+                  display: 'block',
                 },
               }}
             >
               <img src={img.src} alt={`OS Logo ${img.id}`} />
             </Box>
-          ))}
-        </Box>
-      )}
+          );
+        })}
+      </Box>
 
       {/* Main Content */}
       <Box sx={{ flex: 1, width: '80%', margin: '0 auto 30px', marginBottom: '30px' }}>
