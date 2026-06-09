@@ -1,0 +1,23 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Create React TypeScript MUI App",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"install",
+				"-D",
+				"react",
+				"react-dom",
+				"typescript",
+				"@types/react",
+				"@types/react-dom",
+				"@mui/material",
+				"@emotion/react",
+				"@emotion/styled",
+				"@mui/icons-material"
+			]
+		}
+	]
+}
