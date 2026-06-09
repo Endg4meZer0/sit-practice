@@ -209,7 +209,7 @@ function App() {
           const y = yScale(item.y);
           return e("g", { key: item.label },
             e("circle", { cx: x, cy: y, r: 7, fill: "#4f75f5" }),
-            e("text", { x: x + 12, y: y - 10, fontSize: 12, fill: "#1f2937" }, item.label)
+            e("text", { x: x - 12, y: y - 10, textAnchor: "end", fontSize: 12, fill: "#1f2937" }, item.label)
           );
         }),
         e("text", { x: innerWidth / 2, y: innerHeight + 50, textAnchor: "middle", fontSize: 14, fill: "#222" }, metricOptions.find((option) => option.value === chartX)?.label || chartX),
@@ -278,7 +278,6 @@ function App() {
   return e("main", null,
     e("section", { className: "section" },
       e("h1", null, "Рейтинг операционных систем"),
-      e("p", null, "Фильтрация, сортировка и таблица с пагинацией.")
     ),
     e("section", { className: "section" },
       e("h2", null, "Фильтр"),
