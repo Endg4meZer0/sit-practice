@@ -152,7 +152,7 @@ function App() {
     const maxValue = Math.max(...chartData.map((item) => item.value), 1);
     const barCount = chartData.length;
     const barStep = barCount ? innerWidth / barCount : innerWidth;
-    const barWidth = Math.max(36, Math.min(80, barStep * 0.6));
+    const barWidth = Math.max(16, Math.min(80, barStep * 0.6));
 
     return e("svg", { width, height, viewBox: `0 0 ${width} ${height}` },
       e("g", { transform: `translate(${padding.left},${padding.top})` },
@@ -171,10 +171,10 @@ function App() {
           const x = index * barStep + (barStep - barWidth) / 2;
           const y = innerHeight - barHeight;
           const barColor = familyColors[item.family] || "#4f75f5";
-          return e("g", { key: item.label },
+          return e("g", { key: item.label, className: "chart-item-group" },
             e("rect", { x, y, width: barWidth, height: barHeight, fill: barColor, rx: 4 }),
-            e("text", { x: x + barWidth / 2, y: y - 8, textAnchor: "middle", fontSize: 12, fill: "#1f2937" }, item.value.toFixed(1)),
-            e("text", { x: x + barWidth / 2, y: innerHeight + 18, textAnchor: "middle", fontSize: 12, fill: "#222" }, item.label)
+            e("text", { x: x + barWidth / 2, y: y - 8, textAnchor: "middle", fontSize: 9, fill: "#1f2937" }, item.value.toFixed(1)),
+            e("text", { className: "chart-item-label", x: x + barWidth / 2, y: innerHeight + 18, textAnchor: "middle", fontSize: 12, fill: "#222" }, item.label)
           );
         })
       )
@@ -221,9 +221,9 @@ function App() {
           const x = xScale(item.x);
           const y = yScale(item.y);
           const dotColor = familyColors[item.family] || "#4f75f5";
-          return e("g", { key: item.label },
+          return e("g", { key: item.label, className: "chart-item-group" },
             e("circle", { cx: x, cy: y, r: 7, fill: dotColor }),
-            e("text", { x: x - 12, y: y - 10, textAnchor: "end", fontSize: 12, fill: "#1f2937" }, item.label)
+            e("text", { className: "chart-item-label", x: x - 12, y: y - 10, textAnchor: "end", fontSize: 12, fill: "#1f2937" }, item.label)
           );
         }),
         e("text", { x: innerWidth / 2, y: innerHeight + 50, textAnchor: "middle", fontSize: 14, fill: "#222" }, metricOptions.find((option) => option.value === chartX)?.label || chartX),
