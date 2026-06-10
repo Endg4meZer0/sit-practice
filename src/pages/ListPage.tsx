@@ -62,6 +62,7 @@ const ListPage: React.FC<ListPageProps> = ({ isMobile }) => {
   const [page, setPage] = useState(1);
   const chartContainerRef = useRef<HTMLDivElement | null>(null);
   const [chartContainerWidth, setChartContainerWidth] = useState(740);
+  const [hoveredChartItem, setHoveredChartItem] = useState<string | null>(null);
   const pageSize = 8;
 
   const parseNumber = (value: string) => {
@@ -270,14 +271,23 @@ const ListPage: React.FC<ListPageProps> = ({ isMobile }) => {
               const y = innerHeight - barHeight;
               const barColor = item.family === 'Windows' ? '#0067b8' : item.family === 'macOS' ? '#222222' : '#4caf50';
               return (
-                <g key={item.label}>
+                <g
+                  key={item.label}
+                  onMouseEnter={() => setHoveredChartItem(item.label)}
+                  onMouseLeave={() => setHoveredChartItem(null)}
+                  style={{ cursor: 'pointer' }}
+                >
                   <rect x={x} y={y} width={barWidth} height={barHeight} fill={barColor} rx={4} />
-                  <text x={x + barWidth / 2} y={y - 8} textAnchor="middle" fontSize={12} fill="#1f2937">
-                    {item.value.toFixed(1)}
-                  </text>
-                  <text x={x + barWidth / 2} y={innerHeight + 18} textAnchor="middle" fontSize={12} fill="#222">
-                    {item.label}
-                  </text>
+                  {hoveredChartItem === item.label && (
+                    <text x={x + barWidth / 2} y={y - 8} textAnchor="middle" fontSize={12} fill="#1f2937">
+                      {item.value.toFixed(1)}
+                    </text>
+                  )}
+                  {hoveredChartItem === item.label && (
+                    <text x={x + barWidth / 2} y={innerHeight + 18} textAnchor="middle" fontSize={12} fill="#222">
+                      {item.label}
+                    </text>
+                  )}
                 </g>
               );
             })}
@@ -342,11 +352,18 @@ const ListPage: React.FC<ListPageProps> = ({ isMobile }) => {
               const y = yScale(item.y ?? 0);
               const dotColor = familyColors[item.family] || '#4f75f5';
               return (
-                <g key={item.label}>
+                <g
+                  key={item.label}
+                  onMouseEnter={() => setHoveredChartItem(item.label)}
+                  onMouseLeave={() => setHoveredChartItem(null)}
+                  style={{ cursor: 'pointer' }}
+                >
                   <circle cx={x} cy={y} r={7} fill={dotColor} />
-                  <text x={x - 12} y={y - 10} textAnchor="end" fontSize={12} fill="#1f2937">
-                    {item.label}
-                  </text>
+                  {hoveredChartItem === item.label && (
+                    <text x={x - 12} y={y - 10} textAnchor="end" fontSize={12} fill="#1f2937">
+                      {item.label}
+                    </text>
+                  )}
                 </g>
               );
             })}
